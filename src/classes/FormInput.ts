@@ -4,6 +4,7 @@ import { HasRender } from "../interfaces/HasRender.js";
 import { Display } from "./Display.js";
 import { HasPrint } from "../interfaces/HasPrint.js";
 import { Print } from "./Print.js";
+import { bind } from "../decorators/Bind.js";
 
 export class FormInput {
   form: HTMLFormElement;
@@ -65,9 +66,8 @@ export class FormInput {
   }
 
   // Listeners List
-
   private submitFormListener(): void {
-    this.form.addEventListener("submit", this.handleFormSubmit.bind(this));
+    this.form.addEventListener("submit", this.handleFormSubmit);
   }
   private printListener(button: HTMLButtonElement, container: HTMLDivElement) {
     button.addEventListener("click", () => {
@@ -82,15 +82,12 @@ export class FormInput {
       window.scrollTo(0, 0);
     });
   }
-
   private getStoredDocsListener(): void {
-    this.invoicesDisplayBtn.addEventListener(
-      "click",
-      this.getItems.bind(this, "invoice")
+    this.invoicesDisplayBtn.addEventListener("click", () =>
+      this.getItems("invoice")
     );
-    this.estimatesDisplayBtn.addEventListener(
-      "click",
-      this.getItems.bind(this, "estimate")
+    this.estimatesDisplayBtn.addEventListener("click", () =>
+      this.getItems("estimate")
     );
   }
 
@@ -126,7 +123,7 @@ export class FormInput {
   }
 
   // Handlers
-
+  @bind
   private handleFormSubmit(e: Event) {
     e.preventDefault();
     const inputs = this.inputData();
