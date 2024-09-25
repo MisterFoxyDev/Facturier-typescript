@@ -8,3 +8,11 @@ export class Print implements HasPrint {
     document.location.reload();
   }
 }
+
+
+type myType = string | number;
+
+function (a: myType, b: myType): myType {
+  if()
+return a + b;
+}
